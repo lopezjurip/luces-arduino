@@ -1,0 +1,25 @@
+{
+  "name": "luces-arduino",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrpatiwi/luces-arduino.git"
+  },
+  "keywords": [
+    "arduino"
+  ],
+  "author": "Patricio López <patricio@lopezjuri.com> (https://lopezjuri.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mrpatiwi/luces-arduino/issues"
+  },
+  "homepage": "https://github.com/mrpatiwi/luces-arduino#readme",
+  "dependencies": {
+    "johnny-five": "^0.9.55"
+  }
+}
