@@ -20,13 +20,27 @@ board.on('ready', function() {
     new five.Piezo(3),
   ]
 
+  const mapping = (note) => {
+    switch (note[0]) {
+      case 'c': return piezos[0]
+      case 'd': return piezos[1]
+      case 'e': return piezos[2]
+      case 'f': return piezos[3]
+      case 'g': return piezos[4]
+      case 'a': return piezos[5]
+      default: return null;
+    }
+  }
+
   // Setup functions
-  // const play = (note, duration) => piezo.frequency(five.Piezo.Notes[note], duration)
   const play = (note) => {
-    console.log('Play', note)
+    const piezo = mapping(note)
+    if (piezo && piezo.isPlaying) piezo.noTone()
+    if (piezo) piezo.frequency(five.Piezo.Notes[note], 5000)
   }
   const stop = (note) => {
-    console.log('Stop', note)
+    const piezo = mapping(note)
+    if (piezo) piezo.noTone()
   }
 
   const showNotes = () => {
@@ -37,9 +51,10 @@ board.on('ready', function() {
    * Update the current notes and lights state
    */
   const update = (data = {}) => {
-    console.log('Data:', data)
     // Play or stop notes and lights
-    Object.keys(data).forEach(note => (data[note] ? play(note) : stop(note)))
+    Object.keys(data).forEach(note => {
+      data[note] ? play(note) : stop(note)
+    })
     // Save to data store
     return Object.assign(notes, data)
   }
