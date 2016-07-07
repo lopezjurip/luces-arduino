@@ -10,7 +10,6 @@ const board = new five.Board()
 board.on('ready', function() {
    // Setup variables
   const notes = {}
-  const led = new five.Led(13)
   const piezos = [
     new five.Piezo(11),
     new five.Piezo(10),
@@ -35,7 +34,7 @@ board.on('ready', function() {
   // Setup functions
   const play = (note) => {
     const piezo = mapping(note)
-    note = note.replace('1', '6')
+    // note = note.replace('1', '6') // change tune
     if (piezo && piezo.isPlaying) piezo.noTone()
     if (piezo) piezo.frequency(five.Piezo.Notes[note], 5000)
   }
@@ -79,7 +78,6 @@ board.on('ready', function() {
   const socket = io.connect(host)
   socket.on('connect', () => {
     console.log('Connected')
-    led.blink(500)
   })
   socket.on('notes', data => update(data))
 
