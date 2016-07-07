@@ -68,11 +68,9 @@ board.on('ready', function() {
   /**
    * Request the application note state
    */
-  const refresh = () => {
-    return fetch(`${host}/notes`)
-      .then(res => res.json())
-      .then(data => update(data))
-  }
+  // const refresh = () => fetch(`${host}/notes`)
+  //   .then(res => res.json())
+  //   .then(data => update(data));
 
   // Fetch current note state
   // refresh().catch(console.error.bind(console))
