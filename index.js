@@ -4,7 +4,7 @@ const five = require('johnny-five')
 const io = require('socket.io-client')
 const fetch = require('node-fetch')
 
-const host = 'http://localhost:3000'
+const host = 'http://luces-api.lopezjuri.com'
 const board = new five.Board()
 
 board.on('ready', function() {
@@ -35,6 +35,7 @@ board.on('ready', function() {
   // Setup functions
   const play = (note) => {
     const piezo = mapping(note)
+    note = note.replace('1', '6')
     if (piezo && piezo.isPlaying) piezo.noTone()
     if (piezo) piezo.frequency(five.Piezo.Notes[note], 5000)
   }
@@ -53,7 +54,12 @@ board.on('ready', function() {
   const update = (data = {}) => {
     // Play or stop notes and lights
     Object.keys(data).forEach(note => {
-      data[note] ? play(note) : stop(note)
+      if (data[note]) {
+        play(note)
+        setTimeout(() => stop(note), 200)
+      } else {
+        stop(note)
+      }
     })
     // Save to data store
     return Object.assign(notes, data)
@@ -69,7 +75,7 @@ board.on('ready', function() {
   }
 
   // Fetch current note state
-  refresh().catch(console.error.bind(console))
+  // refresh().catch(console.error.bind(console))
 
   // Setup live connection
   const socket = io.connect(host)
